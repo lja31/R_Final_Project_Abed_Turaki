@@ -323,3 +323,48 @@ ggplot(dataset_clean, aes(x = immunization_measles, y = under_5_mortality)) +
 
 
 ```
+Question 8: How does the poverty headcount ratio influence the under-5 mortality rate across countries?
+
+```{r }
+# Step 1: Extract the poverty rate column
+poverty_rate <- dataset2$Poverty_headcount_ratio
+
+# Step 2: Convert to numeric if necessary
+poverty_rate <- as.numeric(poverty_rate)
+
+# Step 3: Combine the data into a clean dataset
+dataset_clean <- na.omit(data.frame(
+  vaccination_rate = immunization_measles,
+  poverty_rate = poverty_rate,
+  mortality_rate = under_5_mortality
+))
+
+# Step 4: Explore the relationship (pairwise correlations)
+correlation_vaccine_mortality <- cor(dataset_clean$vaccination_rate, dataset_clean$mortality_rate, method = "pearson")
+correlation_poverty_mortality <- cor(dataset_clean$poverty_rate, dataset_clean$mortality_rate, method = "pearson")
+correlation_vaccine_poverty <- cor(dataset_clean$vaccination_rate, dataset_clean$poverty_rate, method = "pearson")
+
+# Step 5: Print the correlations
+cat("Correlation between Vaccination Rate and Under-5 Mortality Rate:", correlation_vaccine_mortality, "\n")
+cat("Correlation between Poverty Rate and Under-5 Mortality Rate:", correlation_poverty_mortality, "\n")
+cat("Correlation between Vaccination Rate and Poverty Rate:", correlation_vaccine_poverty, "\n")
+
+# Step 6: Build a multiple linear regression model
+model <- lm(mortality_rate ~ vaccination_rate + poverty_rate, data = dataset_clean)
+
+# Step 7: Summarize the model
+summary(model)
+
+# Optional Step: Visualize the relationships
+library(ggplot2)
+ggplot(dataset_clean, aes(x = vaccination_rate, y = mortality_rate)) +
+  geom_point() +
+  geom_smooth(method = "lm", col = "blue") +
+  labs(title = "Vaccination Rate vs Under-5 Mortality Rate")
+
+ggplot(dataset_clean, aes(x = poverty_rate, y = mortality_rate)) +
+  geom_point() +
+  geom_smooth(method = "lm", col = "red") +
+  labs(title = "Poverty Rate vs Under-5 Mortality Rate")
+
+```
