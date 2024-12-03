@@ -25,6 +25,8 @@ data_long <- dataset %>%
   )
 dataset2 <- pivot_wider(data_long, names_from = 'Indicator_Name', values_from ='Value')  
 
+dataset2$Year <- as.numeric(dataset2$Year)
+class(dataset2$Year)
 
 ```
 
@@ -40,7 +42,7 @@ When you click the **Knit** button a document will be generated that includes bo
 You can also embed plots, for example:
 
 ```{r }
-Plot (Population_male)
+
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
