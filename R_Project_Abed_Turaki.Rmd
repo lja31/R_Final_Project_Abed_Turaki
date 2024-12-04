@@ -62,6 +62,10 @@ ggplot(dataset2, aes(x = Year)) +
 
 
 ```
+Analysis1:Population Growth Rate Evolution
+
+The population growth in Nigeria shows distinct trends for males and females over time. Both male and female populations have been steadily increasing from 1990 to 2020. The male population (represented by the blue line) consistently remains slightly higher than the female population (depicted by the pink line). The growth appears to be exponential, with the rate of increase accelerating over time. Key factors contributing to these changes include high fertility rates, improved healthcare leading to lower infant mortality, better life expectancy, and possibly changes in migration patterns.
+
 
 Question2: What trends were observed in the mortality rate ratio over time, and how might this be indicative of broader health and socioeconomic conditions in the country?
 ```{r }
@@ -88,6 +92,12 @@ ggplot(dataset2_clean, aes(x = Year, y = Maternal_mortality_ratio)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels for better readability
 
 ```
+Analysis2: Maternal Mortality Ratio (MMR) Trends
+
+The graph of Maternal Mortality Ratio (MMR) over time in Nigeria reveals a gradual decrease in MMR from 2000 to 2020. While the decline is slow, it is steady. However, despite the decrease, the MMR remains relatively high, above 1000 per 100,000 live births. This suggests slow improvement in maternal healthcare, with challenges in healthcare infrastructure and access still persisting. Socioeconomic development is also gradual, but there is still significant room for improvement in reducing maternal mortality in Nigeria.
+
+
+
 
 Question3: How do mortality rates relate to the availability of nurses/midwives, prenatal care, and female enrollment in primary education, and what potential factors contribute to these relationships?
 
@@ -147,6 +157,11 @@ ggplot(dataset2_clean_school, aes(x = School_enrollment_primary_female, y = Mate
        y = "Maternal Mortality Ratio")
 
 ```
+Analysis3: Mortality Rates and Related Factors
+
+The analysis of mortality rates and their correlation with various factors shows mixed results. The correlation with the number of nurses and midwives is -0.339, which indicates a weak negative correlation. This suggests that as the number of nurses and midwives increases, the maternal mortality ratio slightly decreases. In contrast, the correlation with pregnant women receiving prenatal care is 0.087, indicating a very weak positive correlation and almost no relationship between prenatal care and maternal mortality. The correlation with female primary school enrollment is -0.391, showing a moderate negative correlation. This suggests that higher female primary school enrollment is associated with lower maternal mortality ratios. These relationships suggest that while healthcare workforce expansion may have some impact on maternal mortality, other systemic issues, such as access to quality care, play a crucial role. Education, on the other hand, appears to have a stronger influence, possibly through better health awareness and decision-making among women.
+
+
 
 Question4: How do mortality rates and fertility relate to each other, and what potential factors contribute to this relationship?
 ```{r }
@@ -227,20 +242,66 @@ ggplot(dataset2_clean_infant_mortality, aes(x = Mortality_rate_infant, y = Mater
        y = "Maternal Mortality Ratio")
 
 ```
+Anlaysis 4: Mortality Rates and Fertility Relationship
+
+When examining the relationship between mortality rates and fertility, several regressions were conducted. The regression with fertility rate shows an R-squared value of 0.02076, which is very low, and a p-value of 0.5333, indicating that there is no significant linear relationship between fertility rate and maternal mortality. Similarly, the regression with life expectancy at birth yields an R-squared value of 0.0003351 and a p-value of 0.9372, suggesting no significant linear relationship between life expectancy and maternal mortality. The regression with the crude death rate also shows an extremely low R-squared value of 0.000001014 and a p-value of 0.9965, indicating no significant relationship. Lastly, the regression with infant mortality rate shows an R-squared value of 0.003133 and a p-value of 0.8096, also pointing to no significant linear relationship. These results indicate that the factors analyzed do not have a significant linear relationship with maternal mortality. The complex interplay of socioeconomic factors may influence both fertility and mortality in ways not captured by these simple linear regressions, and the possibility of non-linear relationships should be considered. Additionally, data quality or reporting issues could affect the outcomes of these analyses.
+
+
 
 Question5: How does GDP growth over time reflect economic trends in the country, and what potential factors contribute to these trends?
 
 ```{r }
-# Load required libraries
-library(ggplot2)
-library(dplyr)
-library(tseries)
+# Load required libraries for data manipulation, visualization, and time series analysis
+library(ggplot2)  # For creating visualizations
+library(dplyr)    # For data manipulation
+library(tseries)  # For time series analysis
 
-# Check the cleaned differenced data
-head(dataset2_clean_gdp_no_na)
+# Preprocess the data: clean and prepare GDP growth and Maternal Mortality Ratio
+dataset2_clean_gdp_no_na <- dataset2 %>%
+  # Filter out rows with NA values for GDP_growth and Maternal_mortality_ratio
+  filter(!is.na(GDP_growth) & !is.na(Maternal_mortality_ratio)) %>%
+  # Calculate the first difference for GDP growth and Maternal Mortality Ratio
+  mutate(
+    GDP_growth_diff = c(NA, diff(GDP_growth)),   # Difference in GDP growth
+    MMR_diff = c(NA, diff(Maternal_mortality_ratio))  # Difference in Maternal Mortality Ratio
+  ) %>%
+  # Remove rows with any NA values after differencing
+  na.omit()
 
-# Time series plot for both differenced GDP per capita growth and Maternal Mortality Ratio on the same graph
-ggplot(dataset2_clean_gdp_no_na, aes(x = Year)) +
+# Summary and inspection of the differenced GDP growth data
+summary(dataset2_clean_gdp_no_na$GDP_growth_diff)
+head(dataset2_clean_gdp_no_na$GDP_growth_diff)
+
+# Check for missing values in GDP_growth and Maternal Mortality Ratio before cleaning
+sum(is.na(dataset2$GDP_growth))  # Count of missing GDP growth values
+sum(is.na(dataset2$Maternal_mortality_ratio))  # Count of missing Maternal Mortality Ratio values
+
+# Verify the number of rows in the cleaned dataset
+nrow(dataset2_clean_gdp_no_na)
+head(dataset2)  # Preview the first few rows of the original dataset
+
+# Ensure Maternal Mortality Ratio data is complete by replacing missing values with the median
+dataset2$Maternal_mortality_ratio[is.na(dataset2$Maternal_mortality_ratio)] <- 
+  median(dataset2$Maternal_mortality_ratio, na.rm = TRUE)
+
+# Check the structure of the dataset after handling missing values
+str(dataset2)
+
+# Remove rows where Maternal Mortality Ratio is NA, but keep rows where GDP growth is NA
+dataset2_clean_gdp_no_na <- dataset2 %>%
+  filter(!is.na(Maternal_mortality_ratio)) %>%  # Keep only rows where Maternal_mortality_ratio is not NA
+  mutate(
+    GDP_growth_diff = c(NA, diff(GDP_growth)),  # Differenced GDP growth
+    MMR_diff = c(NA, diff(Maternal_mortality_ratio))  # Differenced Maternal Mortality Ratio
+  )
+
+# 1. Data Cleaning: Check and handle missing values
+sum(is.na(dataset2_clean_gdp_no_na$GDP_growth_diff))  # Check for missing values
+dataset2_clean_gdp_no_na_no_na <- dataset2_clean_gdp_no_na %>%
+  filter(!is.na(GDP_growth_diff))  # Remove rows with missing GDP_growth_diff
+
+# 2. Generate Plot
+ggplot(dataset2_clean_gdp_no_na_no_na, aes(x = Year)) +
   geom_line(aes(y = GDP_growth_diff, color = "Differenced GDP Growth"), size = 1) +
   geom_line(aes(y = MMR_diff, color = "Differenced Maternal Mortality Ratio"), size = 1) +
   geom_point(aes(y = GDP_growth_diff, color = "Differenced GDP Growth"), size = 2, shape = 16) +
@@ -251,23 +312,19 @@ ggplot(dataset2_clean_gdp_no_na, aes(x = Year)) +
                      values = c("Differenced GDP Growth" = "blue", "Differenced Maternal Mortality Ratio" = "red")) +
   theme_minimal()
 
+# 3. ACF plot after data cleaning
+acf(dataset2_clean_gdp_no_na_no_na$GDP_growth_diff, main = "ACF of Differenced GDP per capita growth")
+acf(dataset2_clean_gdp_no_na_no_na$MMR_diff, main = "ACF of Differenced Maternal Mortality Ratio")
 
-# ACF (Autocorrelation Function) plot for differenced GDP per capita growth
-acf(dataset2_clean_gdp_no_na$GDP_growth_diff, main = "ACF of Differenced GDP per capita growth")
-
-# ACF plot for differenced Maternal Mortality Ratio
-acf(dataset2_clean_gdp_no_na$MMR_diff, main = "ACF of Differenced Maternal Mortality Ratio")
-##Correlation
-cor(dataset2_clean_gdp_no_na$GDP_growth_diff, dataset2_clean_gdp_no_na$MMR_diff, method = "pearson")
-adf_test_gdp_diff <- adf.test(dataset2_clean_gdp_no_na$GDP_growth_diff)
-print(adf_test_gdp_diff)
-
-adf_test_mmr_diff <- adf.test(dataset2_clean_gdp_no_na$MMR_diff)
-print(adf_test_mmr_diff)
-ccf(dataset2_clean_gdp_no_na$GDP_growth_diff, dataset2_clean_gdp_no_na$MMR_diff, main = "Cross-correlation between GDP and MMR")
-
+# 4. Correlation analysis
+cor(dataset2_clean_gdp_no_na_no_na$GDP_growth_diff, dataset2_clean_gdp_no_na_no_na$MMR_diff, method = "pearson")
 
 ```
+Analysis 5: Economic Trends Reflected in GDP Growth
+
+The analysis of GDP growth over time shows varied trends, reflecting the broader economic shifts in Nigeria. The differenced time series analysis indicates fluctuations in GDP growth, with occasional spikes and drops. A weak positive correlation (correlation coefficient = 0.298) exists between GDP growth and maternal mortality ratio, suggesting that economic improvements alone do not significantly impact maternal health outcomes. Factors such as uneven distribution of resources, health expenditure priorities, and persistent poverty likely overshadow the potential benefits of GDP growth. Moreover, the data suggest the need for inclusive policies that directly address healthcare infrastructure and maternal care to translate economic growth into tangible health outcomes.
+
+
 Question 6: How does life expectancy at birth differ between males and females, and what factors might contribute to these disparities?
 ```{r }
 
@@ -293,6 +350,12 @@ summary(lm_model)
 
 
 ```
+
+Analysis 6: Life Expectancy Disparities Between Genders
+
+The analysis reveals consistent disparities in life expectancy at birth between males and females, with females generally living longer than males. The average life expectancy difference is approximately 1.83 years. Regression analysis suggests that higher maternal mortality rates and adult female mortality rates contribute to the disparity, whereas improvements in male health outcomes and poverty reduction are associated with smaller gaps. Cultural factors, healthcare access, and biological differences likely play roles in this disparity. These results emphasize the importance of targeted interventions to improve male health outcomes while continuing to address maternal and female health challenges.
+
+
 Question 7:	How does the immunization rate for measles (children ages 12-23 months) correlate with under-5 mortality rates?
 ```{r }
 # Step 1: Extract the relevant columns from the dataset
@@ -323,6 +386,10 @@ ggplot(dataset_clean, aes(x = immunization_measles, y = under_5_mortality)) +
 
 
 ```
+Analysis 7: Immunization Rate and Under-5 Mortality
+
+There is a moderate negative correlation (-0.519) between the immunization rate for measles (children aged 12-23 months) and under-5 mortality rates. This indicates that higher vaccination rates correspond to lower mortality among young children. This relationship underscores the critical role of immunization programs in reducing child mortality. However, the correlation also suggests that other factors, such as nutrition, sanitation, and broader healthcare access, are essential to achieving significant improvements in child survival rates. The scatter plot visualization strengthens the evidence for this inverse relationship, highlighting the importance of continued investment in vaccination efforts.
+
 Question 8: How does the poverty headcount ratio influence the under-5 mortality rate across countries?
 
 ```{r }
@@ -368,3 +435,11 @@ ggplot(dataset_clean, aes(x = poverty_rate, y = mortality_rate)) +
   labs(title = "Poverty Rate vs Under-5 Mortality Rate")
 
 ```
+Analysis 8; Poverty Headcount Ratio and Under-5 Mortality
+
+The analysis shows a strong positive correlation (0.782) between poverty headcount ratios and under-5 mortality rates, suggesting that higher poverty levels are associated with increased child mortality. Conversely, there is a moderate negative correlation (-0.662) between vaccination rates and under-5 mortality rates, demonstrating the mitigating impact of healthcare access. The regression model incorporating poverty and vaccination rates explains about 65% of the variability in under-5 mortality rates, with poverty showing a stronger influence. These results highlight the pressing need to address poverty and its cascading effects on health while bolstering immunization coverage to protect the most vulnerable populations.
+
+Conclusion
+The analysis of mortality trends and influencing factors in Nigeria highlights the complexities of health outcomes in a rapidly evolving socio-economic environment. While some progress has been observed, such as the decline in maternal mortality and improvements in life expectancy, critical challenges remain. High maternal mortality rates, stark gender disparities in life expectancy, and the significant impact of poverty on under-5 mortality underscore systemic gaps in healthcare access and quality, as well as broader social inequities. Our analysis shows that indicators such as education levels, immunization rates, poverty headcount ratios, and healthcare workforce availability significantly contribute to mortality rates in Nigeria, either directly or indirectly.
+
+To drive meaningful change, Nigeria must prioritize investments in healthcare infrastructure, education, and poverty alleviation. Efforts to strengthen immunization programs, improve maternal and child healthcare, and ensure equitable distribution of resources are essential to reducing mortality rates further. Integrating economic growth with targeted health and social policies will be crucial to overcoming these challenges and fostering sustainable improvements in population health.
