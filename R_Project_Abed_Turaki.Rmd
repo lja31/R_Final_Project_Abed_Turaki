@@ -30,22 +30,16 @@ class(dataset2$Year)
 
 ```
 
-## R Markdown
+Introduction:
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+This project focuses on analyzing mortality trends and the influencing factors in Nigeria, with a particular emphasis on maternal mortality and its correlation with various socio-economic indicators. Using data spanning several decades, we explore the relationship between public health expenditure and maternal mortality rates, the impact of health-related factors such as fertility rates and life expectancy, and how economic growth and demographic trends have influenced public health outcomes. By applying spatial data exploration techniques, time series analysis, and regression models, this project aims to provide a comprehensive understanding of the dynamics driving maternal health outcomes in Nigeria and to highlight areas for potential intervention and improvement.
 
 
-## Including Plots
-
-You can also embed plots, for example:
 Question 1: How did the population growth rate evolve over time in the dataset, and what factors might have contributed to these changes?
 
 ```{r }
-<<<<<<< HEAD
-=======
-str(dataset2)
+
+
 library(ggplot2)
 
 # Convert Year to numeric for plotting
@@ -80,7 +74,7 @@ library(ggplot2)
 # Data Preparation (assuming your dataset is called 'dataset2')
 dataset2$Year <- as.numeric(dataset2$Year)
 
-# Filter the data to remove rows with missing values in 'Maternal_mortality_ratio' and 'Year'
+# Filter the data to remove rows with missing values 
 dataset2_clean <- dataset2 %>%
   select(Year, Maternal_mortality_ratio) %>%
   filter(!is.na(Maternal_mortality_ratio) & !is.na(Year))
@@ -93,7 +87,7 @@ ggplot(dataset2_clean, aes(x = Year, y = Maternal_mortality_ratio)) +
        x = "Year",
        y = "Maternal Mortality Ratio") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels for better readability
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  
 
 ```
 Analysis2: Maternal Mortality Ratio (MMR) Trends
@@ -115,11 +109,13 @@ dataset2_clean_nurses <- dataset2 %>%
   filter(!is.na(Maternal_mortality_ratio) & !is.na(Nurses_and_midwives))
 
 # Calculate and print correlation
-cor_nurses <- cor(dataset2_clean_nurses$Maternal_mortality_ratio, dataset2_clean_nurses$Nurses_and_midwives)
+cor_nurses <- cor(dataset2_clean_nurses$
+Maternal_mortality_ratio, dataset2_clean_nurses$Nurses_and_midwives)
 print(paste("Correlation with Nurses and Midwives: ", cor_nurses))
 
 # Visualize Correlation with Nurses and Midwives
-ggplot(dataset2_clean_nurses, aes(x = Nurses_and_midwives, y = Maternal_mortality_ratio)) +
+ggplot(dataset2_clean_nurses, aes(x = Nurses_and_midwives, 
+                                  y = Maternal_mortality_ratio)) +
   geom_point() +
   geom_smooth(method = "lm", color = "blue", se = FALSE) +
   labs(title = "Maternal Mortality Ratio vs. Nurses and Midwives",
@@ -128,32 +124,42 @@ ggplot(dataset2_clean_nurses, aes(x = Nurses_and_midwives, y = Maternal_mortalit
 
 # 2. Correlation with Pregnant Women Receiving Prenatal Care
 dataset2_clean_prenatal <- dataset2 %>%
-  select(Year, Maternal_mortality_ratio, Pregnant_women_receiving_prenatal_care) %>%
-  filter(!is.na(Maternal_mortality_ratio) & !is.na(Pregnant_women_receiving_prenatal_care))
+  select(Year, Maternal_mortality_ratio, 
+         Pregnant_women_receiving_prenatal_care) %>%
+  filter(!is.na(Maternal_mortality_ratio) & 
+           !is.na(Pregnant_women_receiving_prenatal_care))
 
 # Calculate and print correlation
-cor_prenatal <- cor(dataset2_clean_prenatal$Maternal_mortality_ratio, dataset2_clean_prenatal$Pregnant_women_receiving_prenatal_care)
-print(paste("Correlation with Pregnant Women Receiving Prenatal Care: ", cor_prenatal))
+cor_prenatal <- cor(dataset2_clean_prenatal
+                    $Maternal_mortality_ratio, dataset2_clean_prenatal$Pregnant_women_receiving_prenatal_care)
+print(paste("Correlation with Pregnant Women Receiving Prenatal Care: ", 
+            cor_prenatal))
 
 # Visualize Correlation with Pregnant Women Receiving Prenatal Care
-ggplot(dataset2_clean_prenatal, aes(x = Pregnant_women_receiving_prenatal_care, y = Maternal_mortality_ratio)) +
+ggplot(dataset2_clean_prenatal, aes(x = Pregnant_women_receiving_prenatal_care,
+                                    y = Maternal_mortality_ratio)) +
   geom_point() +
   geom_smooth(method = "lm", color = "blue", se = FALSE) +
-  labs(title = "Maternal Mortality Ratio vs. Pregnant Women Receiving Prenatal Care",
+  labs(title = 
+         "Maternal Mortality Ratio vs. Pregnant Women Receiving Prenatal Care",
        x = "Pregnant Women Receiving Prenatal Care",
        y = "Maternal Mortality Ratio")
 
 # 3. Correlation with School Enrollment Primary Female
 dataset2_clean_school <- dataset2 %>%
   select(Year, Maternal_mortality_ratio, School_enrollment_primary_female) %>%
-  filter(!is.na(Maternal_mortality_ratio) & !is.na(School_enrollment_primary_female))
+  filter(!is.na(Maternal_mortality_ratio) & 
+           !is.na(School_enrollment_primary_female))
 
 # Calculate and print correlation
-cor_school <- cor(dataset2_clean_school$Maternal_mortality_ratio, dataset2_clean_school$School_enrollment_primary_female)
+cor_school <- cor(dataset2_clean_school
+                  $Maternal_mortality_ratio, 
+                  dataset2_clean_school$School_enrollment_primary_female)
 print(paste("Correlation with School Enrollment Primary Female: ", cor_school))
 
 # Visualize Correlation with School Enrollment Primary Female
-ggplot(dataset2_clean_school, aes(x = School_enrollment_primary_female, y = Maternal_mortality_ratio)) +
+ggplot(dataset2_clean_school, aes(x = School_enrollment_primary_female,
+                                  y = Maternal_mortality_ratio)) +
   geom_point() +
   geom_smooth(method = "lm", color = "blue", se = FALSE) +
   labs(title = "Maternal Mortality Ratio vs. School Enrollment Primary Female",
@@ -175,37 +181,54 @@ dataset2_clean_fertility <- dataset2 %>%
   filter(!is.na(Maternal_mortality_ratio) & !is.na(Fertility_rate_total))
 
 # Perform Linear Regression
-model_fertility <- lm(Maternal_mortality_ratio ~ Fertility_rate_total, data = dataset2_clean_fertility)
+model_fertility <- lm(Maternal_mortality_ratio ~ 
+                        Fertility_rate_total, data = 
+                        dataset2_clean_fertility)
 
 # Print Summary of the Model
 summary(model_fertility)
 
 # Plotting the regression
-ggplot(dataset2_clean_fertility, aes(x = Fertility_rate_total, y = Maternal_mortality_ratio)) +
+ggplot(dataset2_clean_fertility, aes(x = Fertility_rate_total,
+                                     y = Maternal_mortality_ratio)) +
   geom_point() +
   geom_smooth(method = "lm", color = "red", se = FALSE) +
   labs(title = "Maternal Mortality Ratio vs. Fertility Rate Total",
        x = "Fertility Rate Total",
        y = "Maternal Mortality Ratio")
 
-# 2. Regression with Life Expectancy at Birth
-dataset2_clean_life_expectancy <- dataset2 %>%
-  select(Year, Maternal_mortality_ratio, Life_expectancy_atbirth) %>%
-  filter(!is.na(Maternal_mortality_ratio) & !is.na(Life_expectancy_atbirth))
+# -Regression Analysis: Maternal Mortality Rate vs. Women's Life Expectancy-
 
-# Perform Linear Regression
-model_life_expectancy <- lm(Maternal_mortality_ratio ~ Life_expectancy_atbirth, data = dataset2_clean_life_expectancy)
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
 
-# Print Summary of the Model
-summary(model_life_expectancy)
+# Filter and clean the data
+dataset2_clean_life_exp <- dataset2 %>%
+  select(Maternal_mortality_ratio, Life_expectancy_at_birth_female) %>%
+  filter(!is.na(Maternal_mortality_ratio) &
+           !is.na(Life_expectancy_at_birth_female))
 
-# Plotting the regression
-ggplot(dataset2_clean_life_expectancy, aes(x = Life_expectancy_atbirth, y = Maternal_mortality_ratio)) +
-  geom_point() +
-  geom_smooth(method = "lm", color = "red", se = FALSE) +
-  labs(title = "Maternal Mortality Ratio vs. Life Expectancy at Birth",
-       x = "Life Expectancy at Birth",
-       y = "Maternal Mortality Ratio")
+# Perform regression analysis
+life_exp_regression <- lm(Maternal_mortality_ratio ~ 
+            Life_expectancy_at_birth_female, data = dataset2_clean_life_exp)
+
+# Print the summary of the regression model
+summary(life_exp_regression)
+
+# Generate a scatterplot with the regression line
+ggplot(dataset2_clean_life_exp, aes(x = Life_expectancy_at_birth_female,
+                                    y = Maternal_mortality_ratio)) +
+  geom_point(color = "blue", size = 2) +  
+  geom_smooth(method = "lm", color = "red", se = TRUE) + 
+  labs(
+    title =
+    "Relationship Between Maternal Mortality and Women's Life Expectancy",
+    x = "Women's Life Expectancy at Birth (Years)",
+    y = "Maternal Mortality Ratio"
+  ) +
+  theme_minimal()
+
 
 # 3. Regression with Crude Death Rate
 dataset2_clean_crude_death_rate <- dataset2 %>%
@@ -213,13 +236,15 @@ dataset2_clean_crude_death_rate <- dataset2 %>%
   filter(!is.na(Maternal_mortality_ratio) & !is.na(Death_rate_crude))
 
 # Perform Linear Regression
-model_crude_death_rate <- lm(Maternal_mortality_ratio ~ Death_rate_crude, data = dataset2_clean_crude_death_rate)
+model_crude_death_rate <- lm(Maternal_mortality_ratio ~ Death_rate_crude, data
+                             = dataset2_clean_crude_death_rate)
 
 # Print Summary of the Model
 summary(model_crude_death_rate)
 
 # Plotting the regression
-ggplot(dataset2_clean_crude_death_rate, aes(x = Death_rate_crude, y = Maternal_mortality_ratio)) +
+ggplot(dataset2_clean_crude_death_rate, aes(x = Death_rate_crude,
+                                            y = Maternal_mortality_ratio)) +
   geom_point() +
   geom_smooth(method = "lm", color = "red", se = FALSE) +
   labs(title = "Maternal Mortality Ratio vs. Crude Death Rate",
@@ -232,18 +257,46 @@ dataset2_clean_infant_mortality <- dataset2 %>%
   filter(!is.na(Maternal_mortality_ratio) & !is.na(Mortality_rate_infant))
 
 # Perform Linear Regression
-model_infant_mortality <- lm(Maternal_mortality_ratio ~ Mortality_rate_infant, data = dataset2_clean_infant_mortality)
+model_infant_mortality <- lm(Maternal_mortality_ratio ~ 
+                               Mortality_rate_infant, data = 
+                               dataset2_clean_infant_mortality)
 
 # Print Summary of the Model
 summary(model_infant_mortality)
 
 # Plotting the regression
-ggplot(dataset2_clean_infant_mortality, aes(x = Mortality_rate_infant, y = Maternal_mortality_ratio)) +
+ggplot(dataset2_clean_infant_mortality, aes(x = Mortality_rate_infant, y = 
+                                              Maternal_mortality_ratio)) +
   geom_point() +
   geom_smooth(method = "lm", color = "red", se = FALSE) +
   labs(title = "Maternal Mortality Ratio vs. Infant Mortality Rate",
        x = "Infant Mortality Rate",
        y = "Maternal Mortality Ratio")
+# -Combined Line Graph: Maternal Mortality Ratio vs. Infant Mortality Rate-
+
+# Filter and clean the data
+dataset2_clean_combined <- dataset2 %>%
+  select(Year, Maternal_mortality_ratio, Mortality_rate_infant) %>%
+  filter(!is.na(Maternal_mortality_ratio) & !is.na(Mortality_rate_infant))
+
+# Generate the combined line graph
+ggplot(dataset2_clean_combined, aes(x = Year)) +
+  geom_line(aes(y = Maternal_mortality_ratio, color = 
+                  "Maternal Mortality Ratio"), size = 1) +
+  geom_line(aes(y = Mortality_rate_infant, color = 
+                  "Infant Mortality Rate"), size = 1) +
+  scale_color_manual(
+    name = "Legend",
+    values = c("Maternal Mortality Ratio" = 
+                 "red", "Infant Mortality Rate" = "blue")
+  ) +
+  labs(
+    title = "Maternal Mortality Ratio and Infant Mortality Rate Over Time",
+    x = "Year",
+    y = "Rate"
+  ) +
+  theme_minimal()
+
 
 ```
 Anlaysis 4: Mortality Rates and Fertility Relationship
@@ -255,73 +308,49 @@ When examining the relationship between mortality rates and fertility, several r
 Question5: How does GDP growth over time reflect economic trends in the country, and what potential factors contribute to these trends?
 
 ```{r }
-# Load required libraries for data manipulation, visualization, and time series analysis
-library(ggplot2)  # For creating visualizations
-library(dplyr)    # For data manipulation
-library(tseries)  # For time series analysis
+# ---- Trend Analysis for GDP Growth and Maternal Mortality Ratio ----
 
-# Preprocess the data: clean and prepare GDP growth and Maternal Mortality Ratio
-dataset2_clean_gdp_no_na <- dataset2 %>%
-  # Filter out rows with NA values for GDP_growth and Maternal_mortality_ratio
-  filter(!is.na(GDP_growth) & !is.na(Maternal_mortality_ratio)) %>%
-  # Calculate the first difference for GDP growth and Maternal Mortality Ratio
-  mutate(
-    GDP_growth_diff = c(NA, diff(GDP_growth)),   # Difference in GDP growth
-    MMR_diff = c(NA, diff(Maternal_mortality_ratio))  # Difference in Maternal Mortality Ratio
-  ) %>%
-  # Remove rows with any NA values after differencing
-  na.omit()
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
 
-# Summary and inspection of the differenced GDP growth data
-summary(dataset2_clean_gdp_no_na$GDP_growth_diff)
-head(dataset2_clean_gdp_no_na$GDP_growth_diff)
+# Ensure data cleaning is done (remove missing values)
+dataset2_clean <- dataset2 %>%
+  filter(!is.na(GDP_growth) & !is.na(Maternal_mortality_ratio))
 
-# Check for missing values in GDP_growth and Maternal Mortality Ratio before cleaning
-sum(is.na(dataset2$GDP_growth))  # Count of missing GDP growth values
-sum(is.na(dataset2$Maternal_mortality_ratio))  # Count of missing Maternal Mortality Ratio values
+# Create time series objects for GDP Growth and Maternal Mortality Ratio
+GDP_growth_ts <- ts(dataset2_clean$GDP_growth, start = 
+                      c(min(dataset2_clean$Year)), frequency = 1)
+MMR_ts <- ts(dataset2_clean$Maternal_mortality_ratio, start
+             = c(min(dataset2_clean$Year)), frequency = 1)
 
-# Verify the number of rows in the cleaned dataset
-nrow(dataset2_clean_gdp_no_na)
-head(dataset2)  # Preview the first few rows of the original dataset
+# Apply a moving average (MA) for trend smoothing
+GDP_growth_trend <- stats::filter(GDP_growth_ts, rep(1/3, 3), sides = 2)
+MMR_trend <- stats::filter(MMR_ts, rep(1/3, 3), sides = 2)
 
-# Ensure Maternal Mortality Ratio data is complete by replacing missing values with the median
-dataset2$Maternal_mortality_ratio[is.na(dataset2$Maternal_mortality_ratio)] <- 
-  median(dataset2$Maternal_mortality_ratio, na.rm = TRUE)
+# Combine smoothed trends into a data frame for plotting
+trend_data <- data.frame(
+  Year = dataset2_clean$Year,
+  GDP_growth_trend = as.numeric(GDP_growth_trend),
+  MMR_trend = as.numeric(MMR_trend)
+)
 
-# Check the structure of the dataset after handling missing values
-str(dataset2)
-
-# Remove rows where Maternal Mortality Ratio is NA, but keep rows where GDP growth is NA
-dataset2_clean_gdp_no_na <- dataset2 %>%
-  filter(!is.na(Maternal_mortality_ratio)) %>%  # Keep only rows where Maternal_mortality_ratio is not NA
-  mutate(
-    GDP_growth_diff = c(NA, diff(GDP_growth)),  # Differenced GDP growth
-    MMR_diff = c(NA, diff(Maternal_mortality_ratio))  # Differenced Maternal Mortality Ratio
-  )
-
-# 1. Data Cleaning: Check and handle missing values
-sum(is.na(dataset2_clean_gdp_no_na$GDP_growth_diff))  # Check for missing values
-dataset2_clean_gdp_no_na_no_na <- dataset2_clean_gdp_no_na %>%
-  filter(!is.na(GDP_growth_diff))  # Remove rows with missing GDP_growth_diff
-
-# 2. Generate Plot
-ggplot(dataset2_clean_gdp_no_na_no_na, aes(x = Year)) +
-  geom_line(aes(y = GDP_growth_diff, color = "Differenced GDP Growth"), size = 1) +
-  geom_line(aes(y = MMR_diff, color = "Differenced Maternal Mortality Ratio"), size = 1) +
-  geom_point(aes(y = GDP_growth_diff, color = "Differenced GDP Growth"), size = 2, shape = 16) +
-  geom_point(aes(y = MMR_diff, color = "Differenced Maternal Mortality Ratio"), size = 2, shape = 16) +
-  labs(title = "Differenced Time Series: GDP per Capita Growth and Maternal Mortality Ratio",
-       x = "Year", y = "Differenced Value") +
-  scale_color_manual(name = "Legend", 
-                     values = c("Differenced GDP Growth" = "blue", "Differenced Maternal Mortality Ratio" = "red")) +
+# Plot the trends together
+ggplot(trend_data, aes(x = Year)) +
+  geom_line(aes(y = GDP_growth_trend, color = 
+                  "GDP Growth Trend"), size = 1) +
+  geom_line(aes(y = MMR_trend, color = 
+                  "Maternal Mortality Ratio Trend"), size = 1) +
+  labs(
+    title = "Trend Analysis: GDP Growth and Maternal Mortality Ratio",
+    x = "Year",
+    y = "Smoothed Values",
+    color = "Legend"
+  ) +
+  scale_color_manual(values = c("GDP Growth Trend" = "blue", 
+                                "Maternal Mortality Ratio Trend" = "red")) +
   theme_minimal()
 
-# 3. ACF plot after data cleaning
-acf(dataset2_clean_gdp_no_na_no_na$GDP_growth_diff, main = "ACF of Differenced GDP per capita growth")
-acf(dataset2_clean_gdp_no_na_no_na$MMR_diff, main = "ACF of Differenced Maternal Mortality Ratio")
-
-# 4. Correlation analysis
-cor(dataset2_clean_gdp_no_na_no_na$GDP_growth_diff, dataset2_clean_gdp_no_na_no_na$MMR_diff, method = "pearson")
 
 ```
 Analysis 5: Economic Trends Reflected in GDP Growth
@@ -336,23 +365,31 @@ Question 6: How does life expectancy at birth differ between males and females, 
 summary(dataset2$Life_expectancy_at_birth_female)
 summary(dataset2$Life_expectancy_atbirth_male)
 #Life Expectancy Difference:
-dataset2$Life_expectancy_diff <- dataset2$Life_expectancy_at_birth_female - dataset2$Life_expectancy_atbirth_male
+dataset2$Life_expectancy_diff <-
+  dataset2$Life_expectancy_at_birth_female - 
+  dataset2$Life_expectancy_atbirth_male
 summary(dataset2$Life_expectancy_diff)
 #
 ggplot(dataset2, aes(x = Year)) +
-  geom_line(aes(y = Life_expectancy_diff, color = "Life Expectancy Difference"), size = 1) +
+  geom_line(aes(y = Life_expectancy_diff, color = 
+                  "Life Expectancy Difference"), size = 1) +
   labs(title = "Difference in Life Expectancy at Birth: Female vs Male",
        x = "Year", y = "Life Expectancy Difference (Female - Male)") +
-  scale_color_manual(name = "Legend", values = c("Life Expectancy Difference" = "purple")) +
+  scale_color_manual(name = "Legend", values = c("Life Expectancy Difference" 
+                                                 = "purple")) +
   theme_minimal()
 
 
 # Linear regression to explore factors affecting life expectancy difference
-lm_model <- lm(Life_expectancy_diff ~ Maternal_mortality_ratio + Mortality_rate_adult_male + Mortality_rate_adult_female + Poverty_headcount_ratio + `Unemployment_male_%ofmalelaborforce`, data = dataset2)
+lm_model <- lm(Life_expectancy_diff ~ 
+                 Maternal_mortality_ratio +
+                 Mortality_rate_adult_male 
+               + Mortality_rate_adult_female + 
+                 Poverty_headcount_ratio + 
+                 `Unemployment_male_%ofmalelaborforce`, 
+               data = dataset2)
 summary(lm_model)
 
-
->>>>>>> 606f330f20e0a363de49c78fad891b825a04a9db
 
 ```
 
@@ -374,17 +411,21 @@ under_5_mortality <- as.numeric(under_5_mortality)
 # Step 3: Remove rows with NA values (missing data)
 dataset_clean <- na.omit(data.frame(immunization_measles, under_5_mortality))
 
-# Step 4: Calculate the correlation between immunization rate and under-5 mortality rate
-correlation <- cor(dataset_clean$immunization_measles, dataset_clean$under_5_mortality, method = "pearson")
+# Step 4: Calculate the correlation between immunization rate 
+#and under-5 mortality rate
+correlation <- cor(dataset_clean$immunization_measles,
+                   dataset_clean$under_5_mortality, method = "pearson")
 
 # Print the correlation
-print(paste("Correlation between immunization rate and under-5 mortality rate:", correlation))
+print(paste("Correlation between immunization rate 
+            and under-5 mortality rate:", correlation))
 
 # Step 5: Visualize the correlation with a scatter plot
 library(ggplot2)
 ggplot(dataset_clean, aes(x = immunization_measles, y = under_5_mortality)) +
   geom_point(color = "blue") +
-  labs(title = "Correlation between Immunization Rate for Measles and Under-5 Mortality Rate",
+  labs(title = "Correlation between Immunization Rate for Measles 
+       and Under-5 Mortality Rate",
        x = "Immunization Rate for Measles (12-23 months)",
        y = "Under-5 Mortality Rate") +
   theme_minimal()
@@ -412,17 +453,24 @@ dataset_clean <- na.omit(data.frame(
 ))
 
 # Step 4: Explore the relationship (pairwise correlations)
-correlation_vaccine_mortality <- cor(dataset_clean$vaccination_rate, dataset_clean$mortality_rate, method = "pearson")
-correlation_poverty_mortality <- cor(dataset_clean$poverty_rate, dataset_clean$mortality_rate, method = "pearson")
-correlation_vaccine_poverty <- cor(dataset_clean$vaccination_rate, dataset_clean$poverty_rate, method = "pearson")
+correlation_vaccine_mortality <- cor(dataset_clean$vaccination_rate, 
+                            dataset_clean$mortality_rate, method = "pearson")
+correlation_poverty_mortality <- cor(dataset_clean$poverty_rate, 
+                            dataset_clean$mortality_rate, method = "pearson")
+correlation_vaccine_poverty <- cor(dataset_clean$vaccination_rate, 
+                            dataset_clean$poverty_rate, method = "pearson")
 
 # Step 5: Print the correlations
-cat("Correlation between Vaccination Rate and Under-5 Mortality Rate:", correlation_vaccine_mortality, "\n")
-cat("Correlation between Poverty Rate and Under-5 Mortality Rate:", correlation_poverty_mortality, "\n")
-cat("Correlation between Vaccination Rate and Poverty Rate:", correlation_vaccine_poverty, "\n")
+cat("Correlation between Vaccination Rate and Under-5 Mortality Rate:", 
+    correlation_vaccine_mortality, "\n")
+cat("Correlation between Poverty Rate and Under-5 Mortality Rate:", 
+    correlation_poverty_mortality, "\n")
+cat("Correlation between Vaccination Rate and Poverty Rate:", 
+    correlation_vaccine_poverty, "\n")
 
 # Step 6: Build a multiple linear regression model
-model <- lm(mortality_rate ~ vaccination_rate + poverty_rate, data = dataset_clean)
+model <- lm(mortality_rate ~ vaccination_rate + poverty_rate, data = 
+              dataset_clean)
 
 # Step 7: Summarize the model
 summary(model)
@@ -439,10 +487,87 @@ ggplot(dataset_clean, aes(x = poverty_rate, y = mortality_rate)) +
   geom_smooth(method = "lm", col = "red") +
   labs(title = "Poverty Rate vs Under-5 Mortality Rate")
 
+# ---- Poverty Rate vs. Maternal Mortality Rate ----
+
+# Filter and clean the data
+dataset2_clean_poverty <- dataset2 %>%
+  select(Maternal_mortality_ratio, Poverty_headcount_ratio) %>% 
+  filter(!is.na(Maternal_mortality_ratio) & !is.na(Poverty_headcount_ratio)) 
+
+# Perform regression analysis
+poverty_regression <- lm(Maternal_mortality_ratio ~ Poverty_headcount_ratio, 
+                         data = dataset2_clean_poverty)
+
+# Print regression summary
+summary(poverty_regression)
+
+# Generate a scatterplot with the regression line
+ggplot(dataset2_clean_poverty, aes(x = Poverty_headcount_ratio, y
+                                   = Maternal_mortality_ratio)) +
+  geom_point(color = "darkblue", size = 2) + 
+  geom_smooth(method = "lm", color = "red", se = TRUE) +
+  labs(
+    title = "Relationship Between Poverty Rate and Maternal Mortality Rate",
+    x = "Poverty Headcount Ratio (%)",
+    y = "Maternal Mortality Ratio"
+  ) +
+  theme_minimal()
+
+
 ```
 Analysis 8; Poverty Headcount Ratio and Under-5 Mortality
 
 The analysis shows a strong positive correlation (0.782) between poverty headcount ratios and under-5 mortality rates, suggesting that higher poverty levels are associated with increased child mortality. Conversely, there is a moderate negative correlation (-0.662) between vaccination rates and under-5 mortality rates, demonstrating the mitigating impact of healthcare access. The regression model incorporating poverty and vaccination rates explains about 65% of the variability in under-5 mortality rates, with poverty showing a stronger influence. These results highlight the pressing need to address poverty and its cascading effects on health while bolstering immunization coverage to protect the most vulnerable populations.
+
+question 9: How does public expenditure on health relate to maternal mortality rates over time, and what insights can be drawn from the trends and correlation between these two variables?
+
+```{r }
+
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+
+# Clean the dataset by selecting relevant columns 
+#(Maternal Mortality Ratio and Public Health Expenditure)
+
+dataset2_clean_health <- dataset2 %>%
+  select(Year, Maternal_mortality_ratio, 
+         Domestic_general_government_health_expenditure_per_capita)%>%  
+  filter(!is.na(Maternal_mortality_ratio) & !is.na
+ (Domestic_general_government_health_expenditure_per_capita))  
+
+# Preview the cleaned data
+head(dataset2_clean_health)
+
+
+# Time Series Plot of Maternal Mortality and Public Health Expenditure
+ggplot(dataset2_clean_health, aes(x = Year)) +
+  geom_line(aes(y = Maternal_mortality_ratio, color = 
+                  "Maternal Mortality Rate"), size = 1) +
+  geom_line(aes(y = Domestic_general_government_health_expenditure_per_capita 
+                * 10, color = "Health Expenditure"), size = 1) +  
+  labs(title = "Maternal Mortality Rate and Public Health Expenditure Over Time"
+       ,
+       x = "Year", y = "Value") +
+  scale_color_manual(name = "Legend", 
+                     values = c("Maternal Mortality Rate" = "blue",
+                                "Health Expenditure" = "red")) +
+  theme_minimal()
+
+
+# Calculate correlation between Maternal Mortality Rate and Public Health Expenditure
+cor(dataset2_clean_health$Maternal_mortality_ratio, dataset2_clean_health$Domestic_general_government_health_expenditure_per_capita)
+
+# Regression 
+health_regression <- lm(Maternal_mortality_ratio ~ Domestic_general_government_health_expenditure_per_capita, 
+                        data =
+                     dataset2_clean_health)
+
+# Print regression results
+summary(health_regression)
+
+
+```
 
 Conclusion
 The analysis of mortality trends and influencing factors in Nigeria highlights the complexities of health outcomes in a rapidly evolving socio-economic environment. While some progress has been observed, such as the decline in maternal mortality and improvements in life expectancy, critical challenges remain. High maternal mortality rates, stark gender disparities in life expectancy, and the significant impact of poverty on under-5 mortality underscore systemic gaps in healthcare access and quality, as well as broader social inequities. Our analysis shows that indicators such as education levels, immunization rates, poverty headcount ratios, and healthcare workforce availability significantly contribute to mortality rates in Nigeria, either directly or indirectly.
