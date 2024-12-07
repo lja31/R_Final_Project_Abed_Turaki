@@ -1,6 +1,6 @@
 ---
 title: "R_Final_Project_Abed_Turaki"
-author: "Laila"
+author: "Laila and Nargis"
 date: "2024-12-02"
 output: pdf_document
 ---
@@ -59,6 +59,45 @@ ggplot(dataset2, aes(x = Year)) +
   theme_minimal()
 
 
+#Life expectancy 
+ggplot(dataset2, aes(x = Year)) +
+  geom_line(aes(y = Life_expectancy_atbirth_male, color = "Male"), linewidth = 1) +
+  geom_line(aes(y = Life_expectancy_at_birth_female, color = "Female"), linewidth = 1) +
+  scale_color_manual(values = c("Male" = "blue", "Female" = "pink")) +
+  labs(
+    title = "Life Expectancy Of Males and Females Over the Years",
+    x = "Year",
+    y = "Life Expectancy",
+    color = "Gender"
+  ) +
+  theme_minimal()
+
+
+# Survival to age 65 
+ggplot(dataset2, aes(x = Year)) +
+  geom_line(aes(y = Survival_to_age_65_male, color = "Male"), linewidth = 1) +
+  geom_line(aes(y = Survival_to_age_65_female, color = "Female"), linewidth = 1) +
+  scale_color_manual(values = c("Male" = "blue", "Female" = "pink")) +
+  labs(
+    title = "Survival To Age 65 Males and Females Over the Years",
+    x = "Year",
+    y = "Survival to Age 65",
+    color = "Gender"
+  ) +
+  theme_minimal()
+
+# Mortality rate 
+ggplot(dataset2, aes(x = Year)) +
+  geom_line(aes(y = Mortality_rate_adult_male, color = "Male"), linewidth = 1) +
+  geom_line(aes(y = Mortality_rate_adult_female, color = "Female"), linewidth = 1) +
+  scale_color_manual(values = c("Male" = "blue", "Female" = "pink")) +
+  labs(
+    title = "Mortality Rate Of Adult Males and Females Over the Years",
+    x = "Year",
+    y = "Mortality Rate",
+    color = "Gender"
+  ) +
+  theme_minimal()
 ```
 Analysis1:Population Growth Rate Evolution
 
@@ -565,6 +604,25 @@ health_regression <- lm(Maternal_mortality_ratio ~ Domestic_general_government_h
 
 # Print regression results
 summary(health_regression)
+
+
+#Time series
+
+dataset2.ts <- ts(as.numeric(dataset2$Domestic_general_government_health_expenditure_per_capita), start = c(2000, 1), end = c(2021, 1), frequency=1)
+
+# Decomposing the annual time series
+dataset2.ts.decomp <- stl(dataset2.ts, s.window = "periodic")
+
+# Plotting the components
+plot(dataset2.ts.decomp)
+
+library(trend)
+
+# Running the Seasonal Mann-Kendall test
+result <- smk.test(dataset2.ts)
+
+print(result)
+
 
 
 ```
