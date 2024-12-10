@@ -561,67 +561,70 @@ The analysis shows a strong positive correlation (0.782) between poverty headcou
 question 9: How does public expenditure on health relate to maternal mortality rates over time, and what insights can be drawn from the trends and correlation between these two variables?
 
 ```{r }
+# ---- Load Required Libraries ----
+library(ggplot2)  # For visualizations
+library(dplyr)    # For data manipulation
 
-# Load necessary libraries
-library(ggplot2)
-library(dplyr)
+# ---- Data Cleaning and Preprocessing ----
 
-# Clean the dataset by selecting relevant columns 
-#(Maternal Mortality Ratio and Public Health Expenditure)
-
+# Step 1: Filter the dataset to keep rows with no missing values in relevant columns
 dataset2_clean_health <- dataset2 %>%
-  select(Year, Maternal_mortality_ratio, 
-         Domestic_general_government_health_expenditure_per_capita)%>%  
-  filter(!is.na(Maternal_mortality_ratio) & !is.na
- (Domestic_general_government_health_expenditure_per_capita))  
+  filter(!is.na(Maternal_mortality_ratio) & !is.na(Domestic_general_government_health_expenditure_per_capita))
 
-# Preview the cleaned data
-head(dataset2_clean_health)
+# Step 2: Replace any missing health expenditure values with the median as a precautionary step
+dataset2$Domestic_general_government_health_expenditure_per_capita[is.na(dataset2$Domestic_general_government_health_expenditure_per_capita)] <- 
+  median(dataset2$Domestic_general_government_health_expenditure_per_capita, na.rm = TRUE)
 
+# Step 3: Check the structure of the dataset (optional step for debugging)
+str(dataset2_clean_health)
 
-# Time Series Plot of Maternal Mortality and Public Health Expenditure
-ggplot(dataset2_clean_health, aes(x = Year)) +
-  geom_line(aes(y = Maternal_mortality_ratio, color = 
-                  "Maternal Mortality Rate"), size = 1) +
-  geom_line(aes(y = Domestic_general_government_health_expenditure_per_capita 
-                * 10, color = "Health Expenditure"), size = 1) +  
-  labs(title = "Maternal Mortality Rate and Public Health Expenditure Over Time"
-       ,
-       x = "Year", y = "Value") +
-  scale_color_manual(name = "Legend", 
-                     values = c("Maternal Mortality Rate" = "blue",
-                                "Health Expenditure" = "red")) +
+# ---- Linear Regression Analysis ----
+
+# Perform regression analysis: Maternal Mortality Rate vs. Health Expenditure
+health_expenditure_regression <- lm(
+  Maternal_mortality_ratio ~ Domestic_general_government_health_expenditure_per_capita, 
+  data = dataset2_clean_health
+)
+
+# Print the summary of the regression model
+summary(health_expenditure_regression)
+
+# ---- Scatter Plot with Regression Line ----
+
+# Create a scatter plot with a regression line
+ggplot(dataset2_clean_health, aes(x = Domestic_general_government_health_expenditure_per_capita, y = Maternal_mortality_ratio)) +
+  geom_point(color = "blue", size = 2) +  # Scatterplot points
+  geom_smooth(method = "lm", color = "red", se = TRUE) +  # Regression line with confidence interval
+  labs(
+    title = "Relationship Between Maternal Mortality Rate and Health Expenditure",
+    x = "Health Expenditure Per Capita (USD)",
+    y = "Maternal Mortality Ratio (Per 100,000 Live Births)"
+  ) +
   theme_minimal()
 
+# ---- Trend Analysis for Health Expenditure ----
 
-# Calculate correlation between Maternal Mortality Rate and Public Health Expenditure
-cor(dataset2_clean_health$Maternal_mortality_ratio, dataset2_clean_health$Domestic_general_government_health_expenditure_per_capita)
+# Step 1: Create a time series for health expenditure
+health_expenditure_ts <- ts(
+  dataset2_clean_health$Domestic_general_government_health_expenditure_per_capita,
+  start = c(min(dataset2_clean_health$Year)),
+  frequency = 1  # Annual data
+)
 
-# Regression 
-health_regression <- lm(Maternal_mortality_ratio ~ Domestic_general_government_health_expenditure_per_capita, 
-                        data =
-                     dataset2_clean_health)
+# Step 2: Visualize the trend without decomposition
+ggplot(dataset2_clean_health, aes(x = Year, y = Domestic_general_government_health_expenditure_per_capita)) +
+  geom_line(color = "blue", size = 1) +  # Line plot for health expenditure
+  geom_point(color = "red", size = 2) +  # Highlight individual data points
+  labs(
+    title = "Trend of Health Expenditure Over Time",
+    x = "Year",
+    y = "Health Expenditure Per Capita (USD)"
+  ) +
+  theme_minimal()
 
-# Print regression results
-summary(health_regression)
+# ---- Analysis ----
 
-
-#Time series
-
-dataset2.ts <- ts(as.numeric(dataset2$Domestic_general_government_health_expenditure_per_capita), start = c(2000, 1), end = c(2021, 1), frequency=1)
-
-# Decomposing the annual time series
-dataset2.ts.decomp <- stl(dataset2.ts, s.window = "periodic")
-
-# Plotting the components
-plot(dataset2.ts.decomp)
-
-library(trend)
-
-# Running the Seasonal Mann-Kendall test
-result <- smk.test(dataset2.ts)
-
-print(result)
+# Use the regression results and trend plot to interpret how public expenditure on health relates to maternal mortality rate.
 
 
 
