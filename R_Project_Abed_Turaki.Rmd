@@ -65,8 +65,7 @@ ggplot(dataset2, aes(x = Year)) +
     x = "Year",
     y = "Population",
     color = "Gender"
-  ) +
-  theme_minimal()
+  ) + theme(legend.position = "bottom")
 
 ```
 
@@ -81,8 +80,7 @@ ggplot(dataset2, aes(x = Year)) +
     x = "Year",
     y = "Life Expectancy",
     color = "Gender"
-  ) +
-  theme_minimal()
+  ) + theme(legend.position = "bottom")
 ```
 
 ```{r, fig.cap="Population of Males and Females Over the Years" }
@@ -96,8 +94,7 @@ ggplot(dataset2, aes(x = Year)) +
     x = "Year",
     y = "Survival to Age 65",
     color = "Gender"
-  ) +
-  theme_minimal()
+  ) + theme(legend.position = "bottom")
 ```
 
 ```{r, fig.cap="Population of Males and Females Over the Years" }
@@ -111,8 +108,7 @@ ggplot(dataset2, aes(x = Year)) +
     x = "Year",
     y = "Mortality Rate",
     color = "Gender"
-  ) +
-  theme_minimal()
+  ) + theme(legend.position = "bottom")
 ```
 
 \newpage
@@ -146,7 +142,8 @@ ggplot(dataset2_clean, aes(x = Year, y = Maternal_mortality_ratio)) +
        x = "Year",
        y = "Maternal Mortality Ratio") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))  
+  theme(legend.position = "bottom", 
+        axis.text.x = element_text(angle = 45, hjust = 1))  
 
 ```
 
@@ -182,7 +179,7 @@ ggplot(dataset2_clean_nurses, aes(x = Nurses_and_midwives,
   geom_smooth(method = "lm", color = "blue", se = FALSE) +
   labs(title = "Maternal Mortality Ratio vs. Nurses and Midwives",
        x = "Nurses and Midwives",
-       y = "Maternal Mortality Ratio")
+       y = "Maternal Mortality Ratio")+ theme(legend.position = "bottom")
 ```
 
 ```{r, fig.cap="Maternal Mortality Ratio vs. Pregnant Women Receiving Prenatal Care" }
@@ -207,7 +204,7 @@ ggplot(dataset2_clean_prenatal, aes(x = Pregnant_women_receiving_prenatal_care,
   labs(title = 
          "Maternal Mortality Ratio vs. Pregnant Women Receiving Prenatal Care",
        x = "Pregnant Women Receiving Prenatal Care",
-       y = "Maternal Mortality Ratio")
+       y = "Maternal Mortality Ratio") + theme(legend.position = "bottom")
 ```
 
 ```{r, fig.cap="Maternal Mortality Ratio vs. School Enrollment Primary Female" }
@@ -230,7 +227,7 @@ ggplot(dataset2_clean_school, aes(x = School_enrollment_primary_female,
   geom_smooth(method = "lm", color = "blue", se = FALSE) +
   labs(title = "Maternal Mortality Ratio vs. School Enrollment Primary Female",
        x = "School Enrollment Primary Female",
-       y = "Maternal Mortality Ratio")
+       y = "Maternal Mortality Ratio") + theme(legend.position = "bottom")
 
 ```
 
@@ -264,7 +261,7 @@ ggplot(dataset2_clean_fertility, aes(x = Fertility_rate_total,
   geom_smooth(method = "lm", color = "red", se = FALSE) +
   labs(title = "Maternal Mortality Ratio vs. Fertility Rate",
        x = "Fertility Rate Total",
-       y = "Maternal Mortality Ratio")
+       y = "Maternal Mortality Ratio") + theme(legend.position = "bottom")
 
 ```
 
@@ -298,8 +295,7 @@ ggplot(dataset2_clean_life_exp, aes(x = Life_expectancy_at_birth_female,
     "Relationship Between Maternal Mortality and Women's Life Expectancy",
     x = "Women's Life Expectancy at Birth (Years)",
     y = "Maternal Mortality Ratio"
-  ) +
-  theme_minimal()
+  ) + theme(legend.position = "bottom")
 ```
 
 ```{r, fig.cap="Maternal Mortality Ratio vs. Crude Death Rate" }
@@ -322,7 +318,7 @@ ggplot(dataset2_clean_crude_death_rate, aes(x = Death_rate_crude,
   geom_smooth(method = "lm", color = "red", se = FALSE) +
   labs(title = "Maternal Mortality Ratio vs. Crude Death Rate",
        x = "Crude Death Rate",
-       y = "Maternal Mortality Ratio")
+       y = "Maternal Mortality Ratio") + theme(legend.position = "bottom")
 
 ```
 
@@ -347,7 +343,7 @@ ggplot(dataset2_clean_infant_mortality, aes(x = Mortality_rate_infant, y =
   geom_smooth(method = "lm", color = "red", se = FALSE) +
   labs(title = "Maternal Mortality Ratio vs. Infant Mortality Rate",
        x = "Infant Mortality Rate",
-       y = "Maternal Mortality Ratio")
+       y = "Maternal Mortality Ratio") + theme(legend.position = "bottom")
 # -Combined Line Graph: Maternal Mortality Ratio vs. Infant Mortality Rate-
 
 # Filter and clean the data
@@ -370,8 +366,7 @@ ggplot(dataset2_clean_combined, aes(x = Year)) +
     title = "Maternal Mortality Ratio and Infant Mortality Rate Over Time",
     x = "Year",
     y = "Rate"
-  ) +
-  theme_minimal()
+  ) + theme(legend.position = "bottom")
 
 
 ```
@@ -427,8 +422,7 @@ ggplot(trend_data, aes(x = Year)) +
     color = "Legend"
   ) +
   scale_color_manual(values = c("GDP Growth Trend" = "blue", 
-                                "Maternal Mortality Ratio Trend" = "red")) +
-  theme_minimal()
+                                "Maternal Mortality Ratio Trend" = "red")) + theme(legend.position = "bottom")
 
 
 ```
@@ -460,8 +454,7 @@ ggplot(dataset2, aes(x = Year)) +
   labs(title = "Difference in Life Expectancy at Birth: Female vs Male",
        x = "Year", y = "Life Expectancy Difference (Female - Male)") +
   scale_color_manual(name = "Legend", values = c("Life Expectancy Difference" 
-                                                 = "purple")) +
-  theme_minimal()
+                                                 = "purple")) + theme(legend.position = "bottom")
 
 
 # Linear regression to explore factors affecting life expectancy difference
@@ -514,8 +507,7 @@ ggplot(dataset_clean, aes(x = immunization_measles, y = under_5_mortality)) +
   geom_point(color = "blue") +
   labs(title = "Immunization Rate for Measles and Under-5 Mortality Rate",
        x = "Immunization Rate for Measles (12-23 months)",
-       y = "Under-5 Mortality Rate") +
-  theme_minimal()
+       y = "Under-5 Mortality Rate") + theme(legend.position = "bottom")
 
 
 ```
@@ -572,7 +564,8 @@ library(ggplot2)
 ggplot(dataset_clean, aes(x = vaccination_rate, y = mortality_rate)) +
   geom_point() +
   geom_smooth(method = "lm", col = "blue") +
-  labs(title = "Vaccination Rate vs Under-5 Mortality Rate")
+  labs(title = "Vaccination Rate vs Under-5 Mortality Rate")+ 
+  theme(legend.position = "bottom")
 
 ```
 
@@ -580,7 +573,8 @@ ggplot(dataset_clean, aes(x = vaccination_rate, y = mortality_rate)) +
 ggplot(dataset_clean, aes(x = poverty_rate, y = mortality_rate)) +
   geom_point() +
   geom_smooth(method = "lm", col = "red") +
-  labs(title = "Poverty Rate vs Under-5 Mortality Rate")
+  labs(title = "Poverty Rate vs Under-5 Mortality Rate")+ 
+  theme(legend.position = "bottom")
 
 ```
 
@@ -608,8 +602,7 @@ ggplot(dataset2_clean_poverty, aes(x = Poverty_headcount_ratio, y
     title = "Relationship Between Poverty Rate and Maternal Mortality Rate",
     x = "Poverty Headcount Ratio (%)",
     y = "Maternal Mortality Ratio"
-  ) +
-  theme_minimal()
+  ) + theme(legend.position = "bottom")
 
 
 ```
@@ -663,8 +656,7 @@ ggplot(dataset2_clean_health, aes(x = Domestic_general_government_health_expendi
     title = "Relationship Between Maternal Mortality Rate and Health Expenditure",
     x = "Health Expenditure Per Capita (USD)",
     y = "Maternal Mortality Ratio (Per 100,000 Live Births)"
-  ) +
-  theme_minimal()
+  ) + theme(legend.position = "bottom")
 
 ```
 
@@ -686,16 +678,15 @@ ggplot(dataset2_clean_health, aes(x = Year, y = Domestic_general_government_heal
     title = "Trend of Health Expenditure Over Time",
     x = "Year",
     y = "Health Expenditure Per Capita (USD)"
-  ) +
-  theme_minimal()
-
-# ---- Analysis ----
-
-# Use the regression results and trend plot to interpret how public expenditure on health relates to maternal mortality rate.
-
+  ) + theme(legend.position = "bottom")
 
 
 ```
+
+\newpage
+
+## Analysis 9: Public expenditure impact on health (maternal mortality rates) over time
+As public expenditure on health services increases, the maternal mortality rate decreases. 
 
 \newpage
 
