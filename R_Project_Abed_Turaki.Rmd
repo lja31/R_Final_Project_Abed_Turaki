@@ -141,17 +141,16 @@ ggplot(dataset2, aes(x = Year)) +
 
 \newpage
 
-## Analysis1:Population Growth Rate Evolution
+## *Analysis1*:Population Growth and Demographic Trends, Life Expectancy Trends, Survival to Age 65, and Adult Mortality Rates
+The population growth in Nigeria from 1990 to 2020 shows a consistent upward trend for both males and females, with the male population always slightly higher than the female population. This trend likely reflects high fertility rates and sustained population momentum. Improved healthcare, including vaccinations and maternal health initiatives, may have reduced child mortality, contributing to the accelerating growth rate. Migration patterns were not explicitly analyzed but may also play a role in shaping these demographics.
 
-The population growth in Nigeria shows distinct trends for males and females 
-over time. Both male and female populations have been steadily increasing from 
-1990 to 2020. The male population (represented by the blue line) consistently remains slightly higher than the female population (depicted by the pink line). 
-The growth appears to be exponential, with the rate of increase accelerating 
-over time. Key factors contributing to these changes include high fertility 
-rates, improved healthcare leading to lower infant mortality, better life expectancy, and possibly changes in migration patterns.
-Additionally, we noticed from the graphs that the life expectancy for females is higher than males. However the gap between them is decreasing along the years. 
-The Mortality rate for males is higher than females, and the same observation 
-the gap is decreasing along the years. Survivals to age 65 years of females are more than males and again the gap is decreasing along the years. 
+Life expectancy at birth has increased steadily for both males and females. Females consistently outlive males, with the gap between male and female life expectancy widening over time. This disparity is likely due to gender differences in health risks, access to healthcare, and biological factors. Women's improved access to maternal care and reproductive health services may also contribute to their longer life expectancy.
+
+Survival to age 65 has shown marked improvement for both genders. Females have a consistently higher survival rate than males, reinforcing the narrative of gender disparities in health outcomes. This trend reflects overall progress in healthcare access and interventions for chronic diseases. However, male survival lags behind, suggesting the need for targeted programs addressing male-specific health risks.
+
+Adult mortality rates have declined significantly, with males consistently exhibiting higher mortality than females. The steady reduction in these rates highlights the success of public health initiatives aimed at controlling infectious diseases, improving healthcare delivery, and addressing lifestyle-related health challenges. The slightly narrowed gap between male and female mortality rates points to overall progress in gender health equity.
+
+In summary, population growth, rising life expectancy, improved survival rates, and declining adult mortality illustrate positive strides in Nigeria's demographic and health landscape. However, persistent gender differences in health outcomes warrant tailored public health interventions for men and women.
 
 \newpage
 
@@ -185,13 +184,10 @@ ggplot(dataset2_clean, aes(x = Year, y = Maternal_mortality_ratio)) +
 
 \newpage
 
-## Analysis2: Maternal Mortality Ratio (MMR) Trends
+## *Analysis2*: Trends in Maternal Mortality Ratio (MMR)
+The Maternal Mortality Ratio (MMR) in Nigeria shows a gradual decline from 2000 to 2020 but remains alarmingly high, exceeding 1000 deaths per 100,000 live births. This slow progress suggests lingering systemic challenges, including gaps in maternal healthcare access, inadequate healthcare infrastructure, and socioeconomic barriers. Despite improvements in healthcare coverage, the persistently high MMR indicates that quality and availability of services remain insufficient in many areas.
 
-The graph of Maternal Mortality Ratio (MMR) over time in Nigeria reveals a 
-gradual decrease in MMR from 2000 to 2020. While the decline is slow, it is 
-steady. However, despite the decrease, the MMR remains relatively high, above 
-1000 per 100,000 live births. This suggests slow improvement in maternal healthcare, with challenges in healthcare infrastructure and access still persisting. Socioeconomic development is also gradual, but there is still significant room for improvement in reducing maternal mortality in Nigeria.
-
+The slight but steady downward trend points to some progress in addressing maternal health, possibly due to better antenatal care programs, increased awareness, and targeted government policies. However, the data suggests that these efforts are not yet robust enough to achieve substantial improvements in maternal outcomes. The continued high rates of maternal mortality underscore the urgent need for investments in skilled birth attendants, emergency obstetric care, and addressing socioeconomic inequalities affecting women's health.
 
 \newpage
 
@@ -272,16 +268,13 @@ ggplot(dataset2_clean_school, aes(x = School_enrollment_primary_female,
 
 \newpage
 
-## Analysis3: Mortality Rates and Related Factors
+## *Analysis3*: Mortality Rates and Correlations with Nurses/Midwives, Prenatal Care, and Female Enrollment in Primary Education
+The correlation analysis reveals mixed relationships between mortality rates and several key healthcare and education indicators:
 
-The analysis of mortality rates and their correlation with various factors shows mixed results. The correlation with the number of nurses and midwives is -0.339, which indicates a weak negative correlation. This suggests that as the number of nurses and midwives increases, the maternal mortality ratio slightly decreases. 
-In contrast, the correlation with pregnant women receiving prenatal care is 
-0.087, indicating a very weak positive correlation and almost no relationship between prenatal care and maternal mortality. The correlation with female 
-primary school enrollment is -0.391, showing a moderate negative correlation. 
-This suggests that higher female primary school enrollment is associated with 
-lower maternal mortality ratios. These relationships suggest that while 
-healthcare workforce expansion may have some impact on maternal mortality, other systemic issues, such as access to quality care, play a crucial role. Education, 
-on the other hand, appears to have a stronger influence, possibly through better health awareness and decision-making among women.
+Nurses and Midwives: A weak negative correlation (-0.339) suggests that as the number of nurses and midwives increases, maternal mortality slightly decreases. This finding highlights the importance of healthcare workforce expansion but also suggests that other systemic barriers, such as quality of care and resource distribution, may dilute the impact.
+Prenatal Care: A very weak positive correlation (0.087) between maternal mortality and prenatal care indicates almost no relationship. This surprising result suggests that while prenatal care access has increased, challenges in the quality and timeliness of care may reduce its effectiveness.
+Female Primary School Enrollment: A moderate negative correlation (-0.391) indicates that higher female primary school enrollment is associated with lower maternal mortality. Education likely enhances women's health awareness, decision-making abilities, and socioeconomic empowerment, contributing to better maternal health outcomes.
+These relationships suggest that while expanding healthcare access and education are crucial, systemic issues like service quality and socioeconomic disparities also need to be addressed to achieve meaningful reductions in mortality rates.
 
 \newpage
 
@@ -419,16 +412,16 @@ ggplot(dataset2_clean_combined, aes(x = Year)) +
 
 \newpage
 
-## Anlaysis 4: Mortality Rates and Fertility Relationship
+## *Analysis4*: Mortality Rates and Fertility Relationships
+Regression analyses of maternal mortality and fertility-related factors yield insignificant linear relationships:
 
-When examining the relationship between mortality rates and fertility, several regressions were conducted. The regression with fertility rate shows an 
-R-squared value of 0.02076, which is very low, and a p-value of 0.5333, 
-indicating that there is no significant linear relationship between fertility 
-rate and maternal mortality. We though to conduct multi-regression like adding another variable like the age of the mom but we could not find these data. Similarly, the regression with life expectancy at birth yields an R-squared 
-value of 0.0003351 and a p-value of 0.9372, suggesting no significant linear relationship between life expectancy and maternal mortality. The regression with the crude death rate also shows an extremely low R-squared value of 0.000001014 
-and a p-value of 0.9965, indicating no significant relationship. Lastly, the regression with infant mortality rate shows an R-squared value of 0.003133 and a p-value of 0.8096, also pointing to no significant linear relationship. These results indicate that the factors analyzed do not have a significant linear relationship with maternal mortality. The complex interplay of socioeconomic factors may influence both fertility and mortality in ways not captured by these simple linear regressions, and the possibility of non-linear relationships 
-should be considered. Additionally, data quality or reporting issues could 
-affect the outcomes of these analyses.
+Fertility Rate Total: The regression analysis shows a very low R-squared value (0.02076) and a p-value of 0.5333, indicating no significant linear relationship. High fertility rates likely contribute to maternal mortality indirectly through socioeconomic and healthcare challenges not captured in this simple model.
+Life Expectancy: Similarly, life expectancy at birth shows no significant relationship with maternal mortality, with an R-squared value of 0.0003351. This could reflect the multifactorial nature of maternal mortality, influenced by systemic health inequities. We thought to add other factors/variables to the 
+model like mother age, but we couldn't get this information (it was not 
+available).
+Crude Death Rate: An extremely low R-squared value (0.000001014) indicates no significant link, emphasizing that maternal mortality is driven by factors beyond general mortality trends.
+Infant Mortality Rate: A regression with infant mortality also fails to find significant relationships (R-squared = 0.003133). However, infant and maternal health are likely interconnected through shared determinants like healthcare access and socioeconomic conditions.
+These results suggest that maternal mortality trends in Nigeria are influenced by complex, non-linear factors. Future research should explore interactions between variables and incorporate broader health system and social determinants of health.
 
 \newpage
 
@@ -517,12 +510,10 @@ ggplot(dataset2_clean_gdp_no_na_no_na, aes(x = Year)) +
 
 \newpage
 
-## Analysis 5: Economic Trends Reflected in GDP Growth
+## *Analysis 5*: Economic Trends Reflected in GDP Growth
+The analysis of GDP growth trends in Nigeria from 2000 to 2020 reveals significant fluctuations, with periods of high growth followed by slower growth or contractions. These variations reflect broader economic shifts influenced by global oil prices, domestic policy changes, and macroeconomic factors. Despite periods of strong GDP growth, the correlation between GDP growth and maternal mortality is weakly positive (0.298). This suggests that economic growth alone does not directly translate to improved maternal health outcomes.
 
-The analysis of GDP growth over time shows varied trends, reflecting the broader economic shifts in Nigeria. The differenced time series analysis indicates fluctuations in GDP growth, with occasional spikes and drops. A weak positive correlation (correlation coefficient = 0.298) exists between GDP growth and maternal mortality ratio, suggesting that economic improvements alone do not significantly impact maternal health outcomes. Factors such as uneven 
-distribution of resources, health expenditure priorities, and persistent poverty likely overshadow the potential benefits of GDP growth. Moreover, the data 
-suggest the need for inclusive policies that directly address healthcare infrastructure and maternal care to translate economic growth into tangible 
-health outcomes.
+Factors such as uneven distribution of wealth, limited healthcare investment, and persistent poverty may undermine the potential benefits of economic growth. The graph of GDP growth compared to the maternal mortality trend underscores this disconnect. While GDP exhibits noticeable variability, maternal mortality remains stubbornly high with only a modest downward trend. This indicates that targeted health and social policies are necessary to channel economic gains into tangible public health improvements.
 
 \newpage
 
@@ -562,11 +553,10 @@ summary(lm_model)
 
 \newpage
 
-## Analysis 6: Life Expectancy Disparities Between Genders
+## *Analysis 6*:Life Expectancy Disparities Between Genders
+The life expectancy analysis highlights consistent disparities between males and females. Females consistently outlive males by an average of 1.83 years, with the gap widening slightly over time. The graph of life expectancy differences indicates steady improvement in female life expectancy, likely driven by better access to maternal health services, lower risks from certain health conditions, and broader socioeconomic gains.
 
-The analysis reveals consistent disparities in life expectancy at birth between males and females, with females generally living longer than males. The average life expectancy difference is approximately 1.83 years. Regression analysis suggests that higher maternal mortality rates and adult female mortality rates contribute to the disparity, whereas improvements in male health outcomes and poverty reduction are associated with smaller gaps. Cultural factors, healthcare access, and biological differences likely play roles in this disparity. These results emphasize the importance of targeted interventions to improve male 
-health outcomes while continuing to address maternal and female health 
-challenges.
+Regression analysis suggests that maternal mortality and adult mortality rates among females are key contributors to these disparities. Meanwhile, reductions in poverty and male-specific health risks are associated with narrowing the gender gap. Cultural norms and biological factors may also play a role, with males typically more vulnerable to risk-taking behaviors and certain diseases. These results underscore the need for targeted public health interventions to improve male health outcomes while sustaining gains for females.
 
 \newpage
 
@@ -606,13 +596,13 @@ ggplot(dataset_clean, aes(x = immunization_measles, y = under_5_mortality)) +
 
 \newpage
 
-## Analysis 7: Immunization Rate and Under-5 Mortality
+## *Analysis 7*:Immunization Rate and Under-5 Mortality
 
-There is a moderate negative correlation (-0.519) between the immunization rate 
-for measles (children aged 12-23 months) and under-5 mortality rates. This indicates that higher vaccination rates correspond to lower mortality among 
-young children. This relationship underscores the critical role of immunization programs in reducing child mortality. However, the correlation also suggests 
-that other factors, such as nutrition, sanitation, and broader healthcare 
-access, are essential to achieving significant improvements in child survival rates. The scatter plot visualization strengthens the evidence for this inverse relationship, highlighting the importance of continued investment in vaccination efforts.
+The relationship between immunization rates for measles (children aged 12-23 months) and under-5 mortality rates reveals a moderate negative correlation (-0.519). This indicates that higher immunization rates are associated with reduced child mortality. The scatterplot visualization reinforces this finding, showing a clear downward trend as vaccination coverage increases.
+
+However, the correlation also highlights the influence of other factors, such as nutrition, sanitation, and access to comprehensive pediatric healthcare. While immunization programs play a critical role in reducing preventable deaths, broader systemic improvements are essential to sustain gains in child survival. These findings emphasize the need to prioritize and expand vaccination coverage while addressing complementary determinants of child health.
+
+
 
 \newpage
 
@@ -703,13 +693,10 @@ ggplot(dataset2_clean_poverty, aes(x = Poverty_headcount_ratio, y
 
 \newpage
 
-## Analysis 8; Poverty Headcount Ratio and Under-5 Mortality
+## *Analysis 8*: Poverty Headcount Ratio and Under-5 Mortality
+The analysis of poverty headcount ratio and under-5 mortality reveals a strong positive correlation (0.782). This finding underscores the profound impact of poverty on child mortality, as families in impoverished conditions often lack access to adequate nutrition, healthcare, and sanitation. Conversely, vaccination rates show a moderate negative correlation (-0.662) with under-5 mortality, demonstrating the protective role of healthcare access in mitigating the effects of poverty.
 
-The analysis shows a strong positive correlation (0.782) between poverty 
-headcount ratios and under-5 mortality rates, suggesting that higher poverty 
-levels are associated with increased child mortality. Conversely, there is a moderate negative correlation (-0.662) between vaccination rates and under-5 mortality rates, demonstrating the mitigating impact of healthcare access. The regression model incorporating poverty and vaccination rates explains about 65%
-of the variability in under-5 mortality rates, with poverty showing a stronger influence. These results highlight the pressing need to address poverty and its cascading effects on health while bolstering immunization coverage to protect 
-the most vulnerable populations.
+A regression model incorporating both poverty and vaccination rates explains 65% of the variability in under-5 mortality rates, with poverty emerging as the stronger predictor. This highlights the cascading effects of socioeconomic disparities on child health outcomes. To reduce under-5 mortality, policies must address poverty alleviation alongside strengthening immunization programs and improving healthcare access for vulnerable populations.
 
 \newpage
 
@@ -785,25 +772,20 @@ ggplot(dataset2_clean_health, aes(x = Year, y = Domestic_general_government_heal
 
 \newpage
 
-## Analysis 9:Public expenditure impact on health (maternal mortality) over time
-From the plot of trend of health expenditure over time, we noticed Nigeria expenditure for health services increases by time. However some years have significant increase like 2005 the peak and then 2015. In general the government 
-is spending more on health services over time (this could be to donors support 
-for health programs like HIV mitigation). 
-We also noticed that as public expenditure on health services increases, the maternal mortality rate decreases. It makes sense as women receive more care and support the possibility of dying decreases. 
+## *Analysis 9*:Public Health Expenditure and Maternal Mortality
+The relationship between public health expenditure and maternal mortality rates was analyzed using data on domestic general government health expenditure per capita. The regression analysis indicates a statistically significant negative relationship between health expenditure and maternal mortality, with a coefficient of -2.22 (p-value = 0.0109). This suggests that every 1 USD increase in per capita health expenditure is associated with a reduction of approximately 2.22 maternal deaths per 100,000 live births.
+
+The trend analysis shows that health expenditure has gradually increased over the years, but the increments remain modest relative to the persistent high maternal mortality rates. The scatter plot illustrates this relationship, with higher expenditures corresponding to slightly lower maternal mortality ratios. Despite this, the overall impact appears limited due to the low baseline levels of health expenditure and inefficiencies in the healthcare system.
+
+These findings emphasize the critical need to not only increase public health funding but also ensure efficient allocation and utilization of resources. Investments should focus on scaling up access to quality maternal health services, training healthcare workers, and improving emergency obstetric care to achieve meaningful reductions in maternal mortality.
 
 \newpage
 
-# Conclusion
-The analysis of mortality trends and influencing factors in Nigeria highlights 
-the complexities of health outcomes in a rapidly evolving socio-economic environment. While some progress has been observed, such as the decline in 
-maternal mortality and improvements in life expectancy, critical challenges 
-remain. High maternal mortality rates, stark gender disparities in life 
-expectancy, and the significant impact of poverty on under-5 mortality 
-underscore systemic gaps in healthcare access and quality, as well as broader social inequities. Our analysis shows that indicators such as education levels, immunization rates, poverty headcount ratios, and healthcare workforce 
-availability significantly contribute to mortality rates in Nigeria, either directly or indirectly.
+# *Conclusion*
+The analysis of mortality trends and influencing factors in Nigeria provides a nuanced understanding of the socio-economic and healthcare dynamics shaping health outcomes. While some progress has been achieved, such as modest declines in maternal mortality rates and improvements in life expectancy, the persistence of high mortality levels and significant disparities highlight systemic challenges.
 
-To drive meaningful change, Nigeria must prioritize investments in healthcare infrastructure, education, and poverty alleviation. Efforts to strengthen immunization programs, improve maternal and child healthcare, and ensure 
-equitable distribution of resources are essential to reducing mortality rates further. Integrating economic growth with targeted health and social policies 
-will be crucial to overcoming these challenges and fostering sustainable improvements in population health.
+Although logically many factors—such as healthcare workforce availability, immunization rates, and education—should directly contribute to reduced mortality rates, the observed relationships were not always strong or statistically significant. This disconnect is likely due to the limited availability and quality of data, which may fail to fully capture the complexity and interplay of these determinants. Additionally, the presence of confounding variables, data inconsistencies, and non-linear relationships likely obscures the impact of these factors.
+
+Despite these limitations, the analysis underscores the importance of targeted interventions. Key priorities include addressing poverty, expanding healthcare access, improving the quality of maternal and child health services, and strengthening education and immunization programs. Robust data collection and monitoring systems are essential for better understanding and addressing the multifaceted drivers of mortality, paving the way for more effective public health policies.
 
 Our github Repository: https://github.com/lja31/R_Final_Project_Abed_Turaki 
