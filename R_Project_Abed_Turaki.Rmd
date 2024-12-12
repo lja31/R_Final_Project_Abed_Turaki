@@ -25,7 +25,6 @@ Our github Repository: https://github.com/lja31/R_Final_Project_Abed_Turaki
 
 
 
-
 Table: Details about the project
 
 |     Item | Value                               |
