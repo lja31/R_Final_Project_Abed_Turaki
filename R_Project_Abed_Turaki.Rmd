@@ -13,13 +13,15 @@ toc: true
 
 # Introduction:
 
+Analyzing Mortality Trends and Influencing Factors in Nigeria
+
 This project focuses on analyzing mortality trends and the influencing factors 
 in Nigeria, with a particular emphasis on maternal mortality and its correlation with various socio-economic indicators. Using data spanning several decades, we explore the relationship between public health expenditure and maternal 
 mortality rates, the impact of health-related factors such as fertility rates 
 and life expectancy, and how economic growth and demographic trends have 
 influenced public health outcomes. By applying spatial data exploration 
 techniques, time series analysis, and regression models, this project aims to provide a comprehensive understanding of the dynamics driving maternal health outcomes in Nigeria and to highlight areas for potential intervention and improvement.
-
+Our github Repository: https://github.com/lja31/R_Final_Project_Abed_Turaki 
 
 
 
@@ -804,3 +806,5 @@ availability significantly contribute to mortality rates in Nigeria, either dire
 To drive meaningful change, Nigeria must prioritize investments in healthcare infrastructure, education, and poverty alleviation. Efforts to strengthen immunization programs, improve maternal and child healthcare, and ensure 
 equitable distribution of resources are essential to reducing mortality rates further. Integrating economic growth with targeted health and social policies 
 will be crucial to overcoming these challenges and fostering sustainable improvements in population health.
+
+Our github Repository: https://github.com/lja31/R_Final_Project_Abed_Turaki 
